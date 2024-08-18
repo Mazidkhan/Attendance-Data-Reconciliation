@@ -1,5 +1,11 @@
 image: python:3.9
 
+# Define the event that triggers the workflow
+on:
+  push:
+    branches:
+      - development
+
 stages:
   - start
   - syntax_check
