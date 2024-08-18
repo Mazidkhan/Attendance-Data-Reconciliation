@@ -53,7 +53,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: mazid262/attendace-data-reconciliation:latest
+          tags: mazid262/attendance-data-reconciliation:latest
 
   end:
     runs-on: ubuntu-latest
