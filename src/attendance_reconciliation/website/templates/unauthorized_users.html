@@ -1,0 +1,41 @@
+{% extends "home.html" %}
+
+{% block title %}Employee Management{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <style>
+            td {
+                padding: 10px;
+            }
+        </style>
+        <h2>Unauthorized Users Management</h2>
+        <a href="{{ url_for('home') }}"><button class="home-button"><i class="fa fa-home" aria-hidden="true"></i></button></a>
+        <label for="from-date" style="color: white; font-weight: bold;">From Date:</label>
+        <input type="date" id="from-date" style="height: 25px; border-radius:15px;">
+        <label for="to-date" style="color: white; font-weight: bold;">To Date:</label>
+        <input type="date" id="to-date" style="height: 25px; border-radius:15px;">
+        <button class="filter-button" onclick="filterUnauthorized()"><i class="fa fa-filter" aria-hidden="true"></i></button>
+        <table id="unauthorizedTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Device ID</th>
+                    <th>Tag</th>
+                    <th>RFID</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        var url = "{{ url }}";
+        var token = "{{ token }}";
+    </script>
+    <script src="{{ url_for('static', filename='js/unauthorized_access_script.js') }}"></script>
+
+{% endblock %}

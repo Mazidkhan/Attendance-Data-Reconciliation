@@ -1,0 +1,33 @@
+image: python:3.9
+
+stages:
+  - start
+  - syntax_check
+  - end
+
+start:
+  stage: start
+  script:
+    - echo "Starting the pipeline..."
+  only:
+    - development
+
+check_python_syntax:
+  stage: syntax_check
+  script:
+    - echo "Checking Python syntax..."
+    - |
+      for file in $(find . -name "*.py"); do
+        echo "Checking $file"
+        python -m py_compile "$file" || { echo "Syntax error in $file"; exit 1; }
+      done
+  only:
+    - development
+
+
+end:
+  stage: end
+  script:
+    - echo "Pipeline finished."
+  only:
+    - development

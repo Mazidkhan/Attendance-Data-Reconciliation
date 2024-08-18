@@ -1,0 +1,47 @@
+{% extends "home.html" %}
+
+{% block title %}Employee Management{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>WFH Employee Management</h2>
+        <button class="add-button" onclick="showPopup('add')"><i class="bi bi-person-plus"></i></button>
+        <a href="{{ url_for('home') }}"><button class="home-button"><i class="fa fa-home" aria-hidden="true"></i></button></a>
+        <table id="employeeTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Employee Name</th>
+                    <th>ERPNext ID</th>
+                    <th>Weeks</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Employee rows will be added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h3 id="popup-title"></h3>
+            <input type="hidden" id="popup-id">
+            <div>
+                <input type="text" id="popup-employee_name" placeholder="Enter Employee Name">
+            </div>
+            <div>
+                <input type="text" id="popup-erpnext_id" placeholder="Enter ERPNext ID">
+            </div>
+
+            <button class="button" id="popup-save-btn" onclick="saveEmployee()">Save</button>
+            <button class="button" onclick="hidePopup()">Cancel</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var url = "{{ url }}";
+        var token = "{{ token }}";
+    </script>
+    <script src="{{ url_for('static', filename='js/wfh_employee_script.js') }}"></script>
+
+{% endblock %}

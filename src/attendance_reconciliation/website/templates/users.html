@@ -1,0 +1,54 @@
+{% extends "home.html" %}
+
+{% block title %}User Management{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>User Management</h2>
+        <button class="add-button" onclick="showPopup('add')"><i class="bi bi-person-plus"></i></button>
+        <a href="{{ url_for('home') }}"><button class="home-button"><i class="fa fa-home" aria-hidden="true"></i></button></a>
+
+        <table id="usersTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Login ID</th>
+                    <th>Role</th>
+                    <th>Active</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- User rows will be added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h3 id="popup-title"></h3>
+            <input type="hidden" id="popup-id">
+            <div>
+                <input type="text" id="popup-user_name" placeholder="Enter User Name">
+            </div>
+            <div>
+                <input type="text" id="popup-loginid" placeholder="Enter Login ID">
+            </div>
+            <div>
+                <input type="text" id="popup-role" placeholder="Enter Role">
+            </div>
+            <div>
+                <input type="text" id="popup-active" placeholder="Enter Active Status">
+            </div>
+            <button class="button" id="popup-save-btn" onclick="saveUser()">Save</button>
+            <button class="button" onclick="hidePopup()">Cancel</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var url = "{{ url }}";
+        var token = "{{ token }}";
+    </script>
+    <script src="{{ url_for('static', filename='js/user_script.js') }}"></script>
+
+{% endblock %}

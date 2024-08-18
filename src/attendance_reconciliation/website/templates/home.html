@@ -1,0 +1,54 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <title>{% block title %}Home{% endblock %}</title>
+</head>
+<body>
+    <div class="nav">
+        <a href="{{ url_for('employees') }}">
+            <button>Employees</button>
+        </a>
+        <a href="{{ url_for('attendance') }}">
+            <button>Attendance</button>
+        </a>
+        <a href="{{ url_for('users') }}">
+            <button>Users</button>
+        </a>
+        <a href="{{ url_for('unauthorized_users') }}">
+            <button class="notification">UnAuthorized Users<span id="badge" class="badge">{{ unauthcount }}</span></button>
+        </a>
+        <a href="{{ url_for('wfh_employees') }}">
+            <button>WFH Users</button>
+        </a>
+        <a href="{{ url_for('devices') }}">
+            <button>Devices</button>
+        </a>
+        <a href="{{ url_for('logout') }}">
+            <button style="background-color:red"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+        </a>
+    </div>
+        <div class="bird-container bird-container--one">
+          <div class="bird bird--one"></div>
+        </div>
+        <div class="bird-container bird-container--two">
+          <div class="bird bird--two"></div>
+        </div>
+        <div class="bird-container bird-container--three">
+          <div class="bird bird--three"></div>
+        </div>
+        <div class="bird-container bird-container--four">
+          <div class="bird bird--four"></div>
+        </div>
+    <script src="{{ url_for('static', filename='js/home_script.js') }}"></script>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
