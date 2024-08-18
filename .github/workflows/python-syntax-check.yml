@@ -1,0 +1,39 @@
+name: Python Syntax Check
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start the pipeline
+        run: echo "Starting the Python syntax check pipeline..."
+
+  check_python_syntax:
+    runs-on: ubuntu-latest
+    needs: start
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Checking Python syntax
+        run: |
+          for file in $(find . -name "*.py"); do
+            echo "Checking $file"
+            python -m py_compile "$file" || { echo "Syntax error in $file"; exit 1; }
+          done
+
+  end:
+    runs-on: ubuntu-latest
+    needs: check_python_syntax
+    steps:
+      - name: End the pipeline
+        run: echo "Python syntax check pipeline finished."
