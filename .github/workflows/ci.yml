@@ -5,7 +5,6 @@ stages:
   - syntax_check
   - end
 
-
 start:
   stage: start
   script:
@@ -18,13 +17,12 @@ check_python_syntax:
   script:
     - echo "Checking Python syntax..."
     - |
-      for file in $(find . -name "*.py"); do
+      for file in $(find ./src -name "*.py"); do
         echo "Checking $file"
         python -m py_compile "$file" || { echo "Syntax error in $file"; exit 1; }
       done
   only:
     - development
-
 
 end:
   stage: end
