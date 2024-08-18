@@ -53,38 +53,11 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: mazid262/your-image-name:latest
-
-  deploy_to_minikube:
-    runs-on: ubuntu-latest
-    needs: build_and_push_docker_image
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Minikube
-        run: |
-          curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-          sudo install minikube-linux-amd64 /usr/local/bin/minikube
-          minikube start --driver=docker
-
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v1
-        with:
-          version: '1.21.0'
-
-      - name: Deploy Docker image to Minikube
-        run: |
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
-
-      - name: Access Minikube service
-        run: |
-          minikube service your-service --url
+          tags: mazid262/attendace-data-reconciliation:latest
 
   end:
     runs-on: ubuntu-latest
-    needs: deploy_to_minikube
+    needs: build_and_push_docker_image
     steps:
       - name: End the pipeline
         run: echo "Pipeline finished."
