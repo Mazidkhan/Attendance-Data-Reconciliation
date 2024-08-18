@@ -1,6 +1,6 @@
-name: Python Syntax Check Pipeline
+name: Python Syntax Check and Docker Build Pipeline
 
-# Trigger the workflow on push to the development branch
+# Trigger the workflow on push to any branch
 on:
   push:
     branches:
@@ -32,9 +32,48 @@ jobs:
             python -m py_compile "$file" || { echo "Syntax error in $file"; exit 1; }
           done
 
-  end:
+  build_docker_image:
     runs-on: ubuntu-latest
     needs: check_python_syntax
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false # This is set to false since the image will be pushed in a later step
+          tags: mazid262/your-image-name:latest
+
+  push_docker_image:
+    runs-on: ubuntu-latest
+    needs: build_docker_image
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push Docker image to Docker Hub
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: mazid262/your-image-name:latest
+
+  end:
+    runs-on: ubuntu-latest
+    needs: push_docker_image
     steps:
       - name: End the pipeline
         run: echo "Pipeline finished."
