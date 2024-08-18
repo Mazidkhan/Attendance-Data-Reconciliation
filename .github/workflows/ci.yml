@@ -1,41 +1,14 @@
-name: CI Pipeline
+name: Hello World Pipeline
 
-
-# Define the event that triggers the workflow
+# Trigger the workflow on push to the main branch
 on:
   push:
     branches:
-      - development
+      - main
 
 jobs:
-  start:
+  say_hello:
     runs-on: ubuntu-latest
     steps:
-      - name: Start the pipeline
-        run: echo "Starting the pipeline..."
-
-  check_python_syntax:
-    runs-on: ubuntu-latest
-    needs: start
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-
-      - name: Checking Python syntax
-        run: |
-          for file in $(find ./src -name "*.py"); do
-            echo "Checking $file"
-            python -m py_compile "$file" || { echo "Syntax error in $file"; exit 1; }
-          done
-
-  end:
-    runs-on: ubuntu-latest
-    needs: check_python_syntax
-    steps:
-      - name: End the pipeline
-        run: echo "Pipeline finished."
+      - name: Print Hello World
+        run: echo "Hello, World!"
