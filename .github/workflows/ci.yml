@@ -5,6 +5,7 @@ stages:
   - syntax_check
   - end
 
+
 start:
   stage: start
   script:
