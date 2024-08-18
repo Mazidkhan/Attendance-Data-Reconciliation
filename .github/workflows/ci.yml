@@ -4,7 +4,7 @@ name: Python Syntax Check Pipeline
 on:
   push:
     branches:
-      - development
+      - '*'
 
 jobs:
   start:
