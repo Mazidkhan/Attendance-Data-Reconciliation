@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: your-service
+spec:
+  selector:
+    app: attendance-data-reconciliation
+  ports:
+    - protocol: TCP
+      port: 2011
+      targetPort: 2011
+  type: LoadBalancer
