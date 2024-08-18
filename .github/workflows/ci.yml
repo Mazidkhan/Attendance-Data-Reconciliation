@@ -1,5 +1,6 @@
 name: CI Pipeline
 
+
 # Define the event that triggers the workflow
 on:
   push:
