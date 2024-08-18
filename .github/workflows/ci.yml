@@ -1,4 +1,4 @@
-image: python:3.9
+name: CI Pipeline
 
 # Define the event that triggers the workflow
 on:
@@ -6,33 +6,35 @@ on:
     branches:
       - development
 
-stages:
-  - start
-  - syntax_check
-  - end
+jobs:
+  start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start the pipeline
+        run: echo "Starting the pipeline..."
 
-start:
-  stage: start
-  script:
-    - echo "Starting the pipeline..."
-  only:
-    - development
+  check_python_syntax:
+    runs-on: ubuntu-latest
+    needs: start
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-check_python_syntax:
-  stage: syntax_check
-  script:
-    - echo "Checking Python syntax..."
-    - |
-      for file in $(find ./src -name "*.py"); do
-        echo "Checking $file"
-        python -m py_compile "$file" || { echo "Syntax error in $file"; exit 1; }
-      done
-  only:
-    - development
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
 
-end:
-  stage: end
-  script:
-    - echo "Pipeline finished."
-  only:
-    - development
+      - name: Checking Python syntax
+        run: |
+          for file in $(find ./src -name "*.py"); do
+            echo "Checking $file"
+            python -m py_compile "$file" || { echo "Syntax error in $file"; exit 1; }
+          done
+
+  end:
+    runs-on: ubuntu-latest
+    needs: check_python_syntax
+    steps:
+      - name: End the pipeline
+        run: echo "Pipeline finished."
