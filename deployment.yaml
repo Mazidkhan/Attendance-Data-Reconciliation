@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: your-deployment
+  name: attendance-reconciliation-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: attendance-data-reconciliation
+      app: attendance-reconciliation
   template:
     metadata:
       labels:
-        app: attendance-data-reconciliation
+        app: attendance-reconciliation
     spec:
       containers:
-      - name: attendance-data-reconciliation
+      - name: attendance-reconciliation
         image: mazid262/attendance-data-reconciliation:latest
         ports:
         - containerPort: 2011
